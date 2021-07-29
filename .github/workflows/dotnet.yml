@@ -21,6 +21,8 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build
       run: msbuild src/Acr.UserDialogs /p:Configuration=Release /restore
+    - name: Pack
+      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /t:Pack
     - uses: actions/upload-artifact@master
       with:
         name: build-artifacts
@@ -30,21 +32,16 @@ jobs:
     permissions:
       packages: write
     needs: build
-    runs-on: [self-hosted, windows, X64]
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 5.0.x
     - uses: actions/download-artifact@master
       with:
         name: build-artifacts
         path: src/Acr.UserDialogs/bin
-    - name: Pack
-      run: dotnet pack src/Acr.UserDialogs --configuration Release --no-build
     - name: Publish
       if: ${{ github.event_name == 'push' }}
       env:
