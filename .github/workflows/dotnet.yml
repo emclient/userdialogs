@@ -43,7 +43,7 @@ jobs:
         name: build-artifacts
         path: src/Acr.UserDialogs/bin
     - name: Publish
-      if: ${{ github.event_name == 'push' }}
+      # if: ${{ github.event_name == 'push' }}
       env:
         token: ${{ secrets.GITHUB_TOKEN }}
       run: |
