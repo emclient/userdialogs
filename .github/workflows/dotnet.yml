@@ -1,0 +1,52 @@
+name: Build and publish
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: [self-hosted, windows, X64]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build
+      run: dotnet build src --configuration Release
+    - uses: actions/upload-artifact@master
+      with:
+        name: build-artifacts
+        path: src/Acr.UserDialogs/bin
+
+  publish:
+    permissions:
+      packages: write
+    needs: build
+    runs-on: [self-hosted, windows, X64]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+    - uses: actions/download-artifact@master
+      with:
+        name: build-artifacts
+        path: src/Acr.UserDialogs/bin
+    - name: Pack
+      run: dotnet pack src/Acr.UserDialogs --configuration Release --no-build
+    - name: Publish
+      if: ${{ github.event_name == 'push' }}
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        dotnet nuget add source https://nuget.pkg.github.com/emclient/index.json -n github
+        dotnet nuget push src/Acr.UserDialogs/bin/Release/*.nupkg -s github --api-key ${{ secrets.GITHUB_TOKEN }}
