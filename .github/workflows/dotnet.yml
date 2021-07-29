@@ -32,7 +32,7 @@ jobs:
     permissions:
       packages: write
     needs: build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
@@ -49,4 +49,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         dotnet nuget add source https://nuget.pkg.github.com/emclient/index.json -n github
-        dotnet nuget push src/Acr.UserDialogs/bin/Release/*.nupkg -s github --api-key ${{ secrets.GITHUB_TOKEN }}
+        find src/Acr.UserDialogs/bin/Release -name '*.nupkg' | xargs -i dotnet nuget push {} -s github --api-key ${{ secrets.GITHUB_TOKEN }}
