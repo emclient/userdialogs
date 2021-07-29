@@ -20,9 +20,9 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build
-      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /restore
+      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:BUILD_BUILDNUMBER=$GITHUB_RUN_NUMBER /restore
     - name: Pack
-      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:RepositoryUrl=https://github.com/${GITHUB_REPOSITORY}.git /t:Pack
+      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:BUILD_BUILDNUMBER=$GITHUB_RUN_NUMBER /t:Pack
     - uses: actions/upload-artifact@master
       with:
         name: build-artifacts
