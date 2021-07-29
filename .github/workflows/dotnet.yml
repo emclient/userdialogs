@@ -18,7 +18,6 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Add msbuild to PATH
-      if: startsWith(matrix.os, 'windows')
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build
       run: msbuild src/Acr.UserDialogs /p:Configuration=Release /restore
