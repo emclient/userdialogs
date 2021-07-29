@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: msbuild src/Acr.UserDialogs /p:Configuration=Release /restore
     - name: Pack
-      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /t:Pack
+      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:RepositoryUrl=https://github.com/${GITHUB_REPOSITORY}.git /t:Pack
     - uses: actions/upload-artifact@master
       with:
         name: build-artifacts
@@ -38,6 +38,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+        include-prerelease: true
     - uses: actions/download-artifact@master
       with:
         name: build-artifacts

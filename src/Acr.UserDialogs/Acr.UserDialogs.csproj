@@ -19,7 +19,7 @@
         <GenerateLibraryLayout Condition="$(TargetFramework.StartsWith('uap'))">true</GenerateLibraryLayout>
         <EnableSourceLink Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' AND '$(MSBuildRuntimeType)' == 'Core' ">true</EnableSourceLink>
         <EnableSourceControlManagerQueries>$(EnableSourceLink)</EnableSourceControlManagerQueries>
-        <RepositoryUrl>https://github.com/aritchie/userdialogs</RepositoryUrl>
+        <RepositoryUrl Condition=" '$(RepositoryUrl)' == '' ">https://github.com/aritchie/userdialogs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>True</IncludeSymbols>
         <IncludeSource>True</IncludeSource>
