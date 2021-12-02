@@ -2,9 +2,9 @@ name: Build and publish
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, mauicompat ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, mauicompat ]
 
 jobs:
   build:
@@ -16,7 +16,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
+    - name: Install MAUI workload
+      run: dotnet workload install maui
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build number
