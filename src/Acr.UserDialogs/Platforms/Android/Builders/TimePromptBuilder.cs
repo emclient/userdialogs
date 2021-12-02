@@ -3,7 +3,7 @@ using Android.App;
 using Android.Text.Format;
 using Android.Widget;
 using Java.Lang;
-
+using TimePicker = Android.Widget.TimePicker;
 
 namespace Acr.UserDialogs.Builders
 {

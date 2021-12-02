@@ -8,6 +8,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Orientation = Android.Widget.Orientation;
+using View = Android.Views.View;
 #if ANDROIDX
 using Google.Android.Material.BottomSheet;
 #else
@@ -104,14 +105,14 @@ namespace Acr.UserDialogs.Fragments
             return row;
         }
 
-        private Color GetColorFromUint(uint color)
+        private Android.Graphics.Color GetColorFromUint(uint color)
         {
             int a = (int)((color >> 24) & 0xff);
             int r = (int)((color >> 16) & 0xff);
             int g = (int)((color >> 8) & 0xff);
             int b = (int)((color) & 0xff);
 
-            return new Color(r, g, b, a);
+            return new Android.Graphics.Color(r, g, b, a);
         }
 
         protected virtual View GetTitle(string text, string subtitle, string icon, uint? iconTint = null)
@@ -192,7 +193,7 @@ namespace Acr.UserDialogs.Fragments
             };
             txt.SetTextSize(ComplexUnitType.Sp, 16);
             if (isDestructive)
-                txt.SetTextColor(Color.Red);
+                txt.SetTextColor(Android.Graphics.Color.Red);
 
             return txt;
         }
@@ -235,7 +236,7 @@ namespace Acr.UserDialogs.Fragments
         {
             var view = new View(this.Activity)
             {
-                Background = new ColorDrawable(System.Drawing.Color.LightGray.ToNative()),
+                Background = new ColorDrawable(Android.Graphics.Color.LightGray),
                 LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, this.DpToPixels(1))
             };
             view.SetPadding(0, this.DpToPixels(7), 0, this.DpToPixels(8));

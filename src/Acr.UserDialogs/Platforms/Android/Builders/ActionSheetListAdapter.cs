@@ -4,7 +4,7 @@ using Acr.UserDialogs.Infrastructure;
 using Android.Content;
 using Android.Views;
 using Android.Widget;
-
+using View = Android.Views.View;
 
 namespace Acr.UserDialogs.Builders
 {

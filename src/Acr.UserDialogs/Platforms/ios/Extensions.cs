@@ -23,8 +23,8 @@ namespace Acr.UserDialogs
             }
         });
 
-        public static UIColor ToNative(this System.Drawing.Color This)
-            => new UIColor((float)This.R / 255.0f, (float)This.G / 255.0f, This.B / 255.0f, This.A / 255.0f);
+        public static UIColor ToNative(this Microsoft.Maui.Graphics.Color This)
+            => new UIColor(This.Red, This.Green, This.Blue, This.Alpha);
 
 #if __IOS__
 

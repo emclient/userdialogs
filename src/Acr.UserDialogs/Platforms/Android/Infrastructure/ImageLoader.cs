@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Graphics.Drawables;
 using Android.Util;
+using Application = Android.App.Application;
 #if ANDROIDX
 using AndroidX.Core.Content;
 #else

@@ -9,7 +9,8 @@ namespace Acr.UserDialogs
     public static class Extensions
     {
 
-        public static Color ToNative(this System.Drawing.Color This) => new Color(This.R, This.G, This.B, This.A);
+        public static Android.Graphics.Color ToNative(this Microsoft.Maui.Graphics.Color This)
+            => new Android.Graphics.Color((byte)(This.Red * 255f), (byte)(This.Green * 255f), (byte)(This.Blue * 255f), (byte)(This.Alpha * 255f));
 
 
         //public static void RequestMainThread(Action action)

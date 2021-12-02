@@ -1,7 +1,7 @@
 ﻿using System;
 using Android.App;
 using Android.OS;
-
+using Application = Android.App.Application;
 
 namespace Acr.UserDialogs.Infrastructure
 {

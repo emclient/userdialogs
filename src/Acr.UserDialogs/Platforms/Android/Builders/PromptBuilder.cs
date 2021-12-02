@@ -7,6 +7,7 @@ using Android.Text.Method;
 using Android.Views.InputMethods;
 using Android.Widget;
 using AlertDialog = Android.App.AlertDialog;
+using Button = Android.Widget.Button;
 #if ANDROIDX
 using AndroidX.AppCompat.App;
 using AppCompatAlertDialog = AndroidX.AppCompat.App.AlertDialog;
