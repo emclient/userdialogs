@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
@@ -77,7 +77,7 @@
 		<Compile Include="Platforms\Shared\**\*.cs" />
 		<Compile Include="Platforms\ios\**\*.cs" />
 		<Compile Include="Platforms\Apple\**\*.cs" />
-		<PackageReference Include="BTProgressHUD" Version="1.3.1" />
+		<PackageReference Include="BTProgressHUD" Version="[1.3.6-mauipre]" />
 	</ItemGroup>
 
 <!--

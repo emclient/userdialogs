@@ -28,14 +28,14 @@ namespace Acr.UserDialogs
 
 #if __IOS__
 
-        public static ProgressHUD.MaskType ToNative(this MaskType maskType)
+        public static BigTed.MaskType ToNative(this MaskType maskType)
         {
             switch (maskType)
             {
-                case MaskType.Black: return ProgressHUD.MaskType.Black;
-                case MaskType.Clear: return ProgressHUD.MaskType.Clear;
-                case MaskType.Gradient: return ProgressHUD.MaskType.Gradient;
-                case MaskType.None: return ProgressHUD.MaskType.None;
+                case MaskType.Black: return BigTed.MaskType.Black;
+                case MaskType.Clear: return BigTed.MaskType.Clear;
+                case MaskType.Gradient: return BigTed.MaskType.Gradient;
+                case MaskType.None: return BigTed.MaskType.None;
                 default:
                     throw new ArgumentException("Invalid mask type");
             }
