@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid90;monoandroid10.0;xamarin.mac20;xamarin.tvos10</TargetFrameworks>
-        <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">uap10.0.16299;$(TargetFrameworks)</TargetFrameworks>
+        <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks)</TargetFrameworks>
         <PackageProjectUrl>https://github.com/emclient/userdialogs</PackageProjectUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <Authors>Allan Ritchie</Authors>
