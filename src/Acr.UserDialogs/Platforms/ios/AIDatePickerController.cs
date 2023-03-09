@@ -308,7 +308,7 @@ namespace AI
 #if __IOS__
                 else if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
                 {
-                    return UIColor.TertiarySystemBackgroundColor;
+                    return UIColor.TertiarySystemBackground;
                 }
 #endif
                 else
