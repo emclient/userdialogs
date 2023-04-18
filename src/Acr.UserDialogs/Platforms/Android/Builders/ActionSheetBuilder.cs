@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Android.App;
 #if ANDROIDX
@@ -17,8 +17,10 @@ namespace Acr.UserDialogs.Builders
     {
         public Dialog Build(Activity activity, ActionSheetConfig config)
         {
+            var subtitle = !string.IsNullOrWhiteSpace(config.Subtitle) ? config.Subtitle : config.Message; // prefer Subtitle over Message
             var dlg = new AlertDialog.Builder(activity, config.AndroidStyleId ?? 0)
-                .SetTitle(config.Title);
+                .SetTitle(config.Title)
+                .SetMessage(subtitle);
             //.SetCustomTitle(new TextView(activity) {
             //    Text = config.Title,
             //    TextSize = 18.0f
@@ -52,8 +54,10 @@ namespace Acr.UserDialogs.Builders
 
         public Dialog Build(AppCompatActivity activity, ActionSheetConfig config)
         {
+            var subtitle = !string.IsNullOrWhiteSpace(config.Subtitle) ? config.Subtitle : config.Message; // prefer Subtitle over Message
             var dlg = new AppCompatAlertDialog.Builder(activity, config.AndroidStyleId ?? 0)
-                .SetTitle(config.Title);
+                .SetTitle(config.Title)
+                .SetMessage(subtitle);
             //.SetCustomTitle(new TextView(activity) {
             //    Text = config.Title,
             //    TextSize = 18.0f
