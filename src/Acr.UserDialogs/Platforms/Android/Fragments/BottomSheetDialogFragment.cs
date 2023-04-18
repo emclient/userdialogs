@@ -197,6 +197,8 @@ namespace Acr.UserDialogs.Fragments
             txt.SetTextSize(ComplexUnitType.Sp, 16);
             if (isDestructive)
                 txt.SetTextColor(Color.Red);
+            txt.SetMaxLines(1);
+            txt.Ellipsize = Android.Text.TextUtils.TruncateAt.End;
 
             return txt;
         }
