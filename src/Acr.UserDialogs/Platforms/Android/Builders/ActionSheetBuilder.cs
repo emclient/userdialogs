@@ -10,7 +10,6 @@ using AppCompatAlertDialog = Android.Support.V7.App.AlertDialog;
 #endif
 using AlertDialog = Android.App.AlertDialog;
 
-
 namespace Acr.UserDialogs.Builders
 {
     public class ActionSheetBuilder : IAlertDialogBuilder<ActionSheetConfig>
