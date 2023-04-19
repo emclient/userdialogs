@@ -17,13 +17,13 @@ namespace Acr.UserDialogs
         public string Title { get; set; }
         public string Message { get; set; }
         public int? AndroidStyleId { get; set; } = DefaultAndroidStyleId;
-        public Action<bool> OnAction { get; set; }
+        public Action<bool?> OnAction { get; set; }
         //public bool UwpCancelOnEscKey { get; set; }
         //public bool UwpSubmitOnEnterKey { get; set; }
 
         public string OkText { get; set; } = !DefaultUseYesNo ? DefaultOkText : DefaultYes;
         public string CancelText { get; set; } = !DefaultUseYesNo ? DefaultCancelText : DefaultNo;
-
+        public string? NeutralText { get; set; }
 
         public ConfirmConfig UseYesNo()
         {
@@ -53,8 +53,14 @@ namespace Acr.UserDialogs
             return this;
         }
 
+        public ConfirmConfig SetNeutralText(string text)
+        {
+            this.NeutralText = text;
+            return this;
+        }
 
-        public ConfirmConfig SetAction(Action<bool> action)
+
+        public ConfirmConfig SetAction(Action<bool?> action)
         {
             this.OnAction = action;
             return this;
