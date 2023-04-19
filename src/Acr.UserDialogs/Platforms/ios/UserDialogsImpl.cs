@@ -41,6 +41,8 @@ namespace Acr.UserDialogs
         {
             var dlg = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
             dlg.AddAction(UIAlertAction.Create(config.CancelText, UIAlertActionStyle.Cancel, x => config.OnAction?.Invoke(false)));
+            if (!string.IsNullOrWhiteSpace(config.NeutralText))
+                dlg.AddAction(UIAlertAction.Create(config.NeutralText, UIAlertActionStyle.Default, x => config.OnAction?.Invoke(null)));
             dlg.AddAction(UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x => config.OnAction?.Invoke(true)));
             return dlg;
         });

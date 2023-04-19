@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -136,12 +137,12 @@ namespace Acr.UserDialogs
         }
 
 
-        public virtual async Task<bool> ConfirmAsync(ConfirmConfig config, CancellationToken? cancelToken = null)
+        public virtual async Task<bool?> ConfirmAsync(ConfirmConfig config, CancellationToken? cancelToken = null)
         {
             if (config.OnAction != null)
                 throw new ArgumentException(NO_ONACTION);
 
-            var tcs = new TaskCompletionSource<bool>();
+            var tcs = new TaskCompletionSource<bool?>();
             config.OnAction = x => tcs.TrySetResult(x);
 
             var disp = this.Confirm(config);
@@ -152,14 +153,28 @@ namespace Acr.UserDialogs
         }
 
 
-        public virtual Task<bool> ConfirmAsync(string message, string title, string okText, string cancelText, CancellationToken? cancelToken = null)
+        public virtual async Task<bool> ConfirmAsync(string message, string title, string okText, string cancelText, CancellationToken? cancelToken = null)
+        {
+            var result = await this.ConfirmAsync(new ConfirmConfig
+            {
+                Message = message,
+                Title = title,
+                CancelText = cancelText ?? ConfirmConfig.DefaultCancelText,
+                OkText = okText ?? ConfirmConfig.DefaultOkText
+            }, cancelToken);
+            Debug.Assert(result is not null);
+            return result ?? false;
+        }
+
+        public virtual Task<bool?> ConfirmAsync(string message, string title, string okText, string neutralText, string cancelText, CancellationToken? cancelToken = null)
         {
             return this.ConfirmAsync(new ConfirmConfig
             {
                 Message = message,
                 Title = title,
                 CancelText = cancelText ?? ConfirmConfig.DefaultCancelText,
-                OkText = okText ?? ConfirmConfig.DefaultOkText
+                OkText = okText ?? ConfirmConfig.DefaultOkText,
+                NeutralText = neutralText
             }, cancelToken);
         }
 
