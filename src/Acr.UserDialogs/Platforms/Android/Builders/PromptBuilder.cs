@@ -54,13 +54,13 @@ namespace Acr.UserDialogs.Builders
                 .SetTitle(config.Title)
                 .SetView(txt)
                 .SetPositiveButton(config.OkText, (s, a) =>
-                    config.OnAction(new PromptResult(true, txt.Text.Trim()))
+                    config.OnAction(new PromptResult(true, txt.Text?.Trim()))
                 );
 
             if (config.IsCancellable)
             {
                 builder.SetNegativeButton(config.CancelText, (s, a) =>
-                    config.OnAction(new PromptResult(false, txt.Text.Trim()))
+                    config.OnAction(new PromptResult(false, txt.Text?.Trim()))
                 );
             }
             var dialog = builder.Create();
@@ -108,13 +108,13 @@ namespace Acr.UserDialogs.Builders
                 .SetTitle(config.Title)
                 .SetView(txt)
                 .SetPositiveButton(config.OkText, (s, a) =>
-                    config.OnAction(new PromptResult(true, txt.Text.Trim()))
+                    config.OnAction(new PromptResult(true, txt.Text?.Trim()))
                 );
 
             if (config.IsCancellable)
             {
                 builder.SetNegativeButton(config.CancelText, (s, a) =>
-                    config.OnAction(new PromptResult(false, txt.Text.Trim()))
+                    config.OnAction(new PromptResult(false, txt.Text?.Trim()))
                 );
             }
             var dialog = builder.Create();
