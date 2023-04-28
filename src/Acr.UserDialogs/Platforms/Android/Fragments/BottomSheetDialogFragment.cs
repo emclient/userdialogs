@@ -61,8 +61,16 @@ namespace Acr.UserDialogs.Fragments
                 layout.AddView(this.CreateDivider());
             }
 
+            var sv = new ScrollView(this.Activity);
+            sv.NestedScrollingEnabled = true;
+            var childLayout = new LinearLayout(this.Activity)
+            {
+                Orientation = Orientation.Vertical
+            };
             foreach (var action in config.Options)
-                layout.AddView(this.CreateRow(action, false));
+                childLayout.AddView(this.CreateRow(action, false));
+            sv.AddView(childLayout);
+            layout.AddView(sv);
 
             if (config.Destructive != null)
             {
