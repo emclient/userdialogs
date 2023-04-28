@@ -94,7 +94,7 @@ namespace Acr.UserDialogs
             if (activity is AppCompatActivity act)
                 return this.ShowDialog<PromptAppCompatDialogFragment, PromptConfig>(act, config);
 
-            return this.Show(activity, () => new PromptBuilder().Build(activity, config));
+            return this.Show(activity, () => new PromptBuilder().BuildWithAction(activity, config));
         }
 
 
@@ -271,6 +271,21 @@ namespace Acr.UserDialogs
             {
                 dialog = dialogBuilder();
                 dialog.Show();
+            });
+            return new DisposableAction(() =>
+                activity.SafeRunOnUi(dialog.Dismiss)
+            );
+        }
+
+        protected virtual IDisposable Show(Activity activity, Func<(Dialog dlg, Action afterShow)> dialogBuilder)
+        {
+            Dialog dialog = null;
+            activity.SafeRunOnUi(() =>
+            {
+                var ret = dialogBuilder();
+                dialog = ret.dlg;
+                dialog.Show();
+                ret.afterShow();
             });
             return new DisposableAction(() =>
                 activity.SafeRunOnUi(dialog.Dismiss)

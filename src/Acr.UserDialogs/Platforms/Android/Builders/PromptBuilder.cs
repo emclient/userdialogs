@@ -20,7 +20,7 @@ namespace Acr.UserDialogs.Builders
 {
     public class PromptBuilder : IAlertDialogBuilder<PromptConfig>
     {
-        public Dialog Build(Activity activity, PromptConfig config)
+        public (Dialog dialog, Action onShown) BuildWithAction(Activity activity, PromptConfig config)
         {
             var txt = new EditText(activity)
             {
@@ -71,9 +71,13 @@ namespace Acr.UserDialogs.Builders
             var dialog = builder.Create();
             this.HookTextChanged(dialog, txt, config);
 
-            return dialog;
+            return (dialog, () => txt.RequestFocus());
         }
 
+        public Dialog Build(Activity activity, PromptConfig config)
+        {
+            return BuildWithAction(activity, config).dialog;
+        }
 
         public Dialog Build(AppCompatActivity activity, PromptConfig config)
         {
@@ -125,9 +129,11 @@ namespace Acr.UserDialogs.Builders
             var dialog = builder.Create();
             this.HookTextChanged(dialog, txt, config);
 
+            dialog.ShowEvent += (sender, e) => { txt.RequestFocus(); };
+
             return dialog;
         }
-
+        
 
         protected virtual void HookTextChanged(Dialog dialog, EditText txt, PromptConfig config)
         {
