@@ -58,6 +58,11 @@ namespace Acr.UserDialogs.Fragments
                 layout.AddView(this.CreateDivider());
             }
 
+            var param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, 0)
+            {
+                Weight= 1
+            };
+
             var sv = new ScrollView(this.Activity);
             sv.NestedScrollingEnabled = true;
             var childLayout = new LinearLayout(this.Activity)
@@ -67,6 +72,8 @@ namespace Acr.UserDialogs.Fragments
             foreach (var action in config.Options)
                 childLayout.AddView(this.CreateRow(action, false));
             sv.AddView(childLayout);
+            sv.LayoutParameters = param;
+            
             layout.AddView(sv);
 
             if (config.Destructive != null)
