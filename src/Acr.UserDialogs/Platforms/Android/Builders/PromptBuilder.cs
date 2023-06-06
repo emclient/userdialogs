@@ -7,6 +7,7 @@ using Android.Text.Method;
 using Android.Views.InputMethods;
 using Android.Widget;
 using AlertDialog = Android.App.AlertDialog;
+using Android.Util;
 #if ANDROIDX
 using AndroidX.AppCompat.App;
 using AppCompatAlertDialog = AndroidX.AppCompat.App.AlertDialog;
@@ -57,7 +58,7 @@ namespace Acr.UserDialogs.Builders
                 .SetCancelable(false)
                 .SetMessage(config.Message)
                 .SetTitle(config.Title)
-                .SetView(txt)
+                //.SetView(txt)
                 .SetPositiveButton(config.OkText, (s, a) =>
                     config.OnAction(new PromptResult(true, txt.Text?.Trim()))
                 );
@@ -70,6 +71,11 @@ namespace Acr.UserDialogs.Builders
             }
             var dialog = builder.Create();
             this.HookTextChanged(dialog, txt, config);
+
+            var dm = txt.Resources.DisplayMetrics;
+            var margin = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 10, dm);
+
+            dialog.SetView(txt, margin, 0, margin, 0);
 
             return (dialog, () => txt.RequestFocus());
         }
@@ -93,7 +99,7 @@ namespace Acr.UserDialogs.Builders
             }
             if (config.MaxLength != null)
                 txt.SetFilters(new[] { new InputFilterLengthFilter(config.MaxLength.Value) });
-
+           
             SetInputType(txt, config.InputType);
 
             if (config.AutoCorrectionConfig != AutoCorrectionConfig.Default)
@@ -115,7 +121,7 @@ namespace Acr.UserDialogs.Builders
                 .SetCancelable(false)
                 .SetMessage(config.Message)
                 .SetTitle(config.Title)
-                .SetView(txt)
+                //.SetView(txt)
                 .SetPositiveButton(config.OkText, (s, a) =>
                     config.OnAction(new PromptResult(true, txt.Text?.Trim()))
                 );
@@ -128,6 +134,11 @@ namespace Acr.UserDialogs.Builders
             }
             var dialog = builder.Create();
             this.HookTextChanged(dialog, txt, config);
+
+            var dm = txt.Resources.DisplayMetrics;
+            var margin = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 10, dm);
+
+            dialog.SetView(txt, margin, 0, margin, 0);
 
             dialog.ShowEvent += (sender, e) => { txt.RequestFocus(); };
 
