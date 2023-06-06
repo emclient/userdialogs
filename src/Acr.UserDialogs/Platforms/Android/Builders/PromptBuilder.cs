@@ -5,6 +5,7 @@ using Android.Content;
 using Android.Text;
 using Android.Text.Method;
 using Android.Views.InputMethods;
+using Android.Util;
 using Android.Widget;
 using AlertDialog = Android.App.AlertDialog;
 using AndroidX.AppCompat.App;
@@ -52,7 +53,7 @@ namespace Acr.UserDialogs.Builders
                 .SetCancelable(false)
                 .SetMessage(config.Message)
                 .SetTitle(config.Title)
-                .SetView(txt)
+                //.SetView(txt)
                 .SetPositiveButton(config.OkText, (s, a) =>
                     config.OnAction(new PromptResult(true, txt.Text?.Trim()))
                 );
@@ -65,6 +66,11 @@ namespace Acr.UserDialogs.Builders
             }
             var dialog = builder.Create();
             this.HookTextChanged(dialog, txt, config);
+
+            var dm = txt.Resources.DisplayMetrics;
+            var margin = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 10, dm);
+
+            dialog.SetView(txt, margin, 0, margin, 0);
 
             return (dialog, () => txt.RequestFocus());
         }
@@ -110,7 +116,7 @@ namespace Acr.UserDialogs.Builders
                 .SetCancelable(false)
                 .SetMessage(config.Message)
                 .SetTitle(config.Title)
-                .SetView(txt)
+                //.SetView(txt)
                 .SetPositiveButton(config.OkText, (s, a) =>
                     config.OnAction(new PromptResult(true, txt.Text?.Trim()))
                 );
@@ -123,6 +129,11 @@ namespace Acr.UserDialogs.Builders
             }
             var dialog = builder.Create();
             this.HookTextChanged(dialog, txt, config);
+
+            var dm = txt.Resources.DisplayMetrics;
+            var margin = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 10, dm);
+
+            dialog.SetView(txt, margin, 0, margin, 0);
 
             dialog.ShowEvent += (sender, e) => { txt.RequestFocus(); };
 
