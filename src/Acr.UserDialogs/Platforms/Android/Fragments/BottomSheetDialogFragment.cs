@@ -18,6 +18,22 @@ namespace Acr.UserDialogs.Fragments
 {
     public class BottomSheetDialogFragment : AbstractAppCompatDialogFragment<ActionSheetConfig>
     {
+        private class ScrollViewEx : ScrollView
+        {
+            public ScrollViewEx(Context context) : base(context)
+            {
+            }
+
+            protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
+            {
+                base.OnLayout(changed, left, top, right, bottom);
+
+                var child = this.GetChildAt(0);
+                if (child is not null)
+                    NestedScrollingEnabled = child.Height > this.Height;
+            }
+        }
+
         protected override void SetDialogDefaults(Dialog dialog)
         {
             dialog.KeyPress += this.OnKeyPress;
@@ -66,8 +82,7 @@ namespace Acr.UserDialogs.Fragments
                 Weight= 1
             };
 
-            var sv = new ScrollView(this.Activity);
-            sv.NestedScrollingEnabled = true;
+            var sv = new ScrollViewEx(this.Activity);
             var childLayout = new LinearLayout(this.Activity)
             {
                 Orientation = Orientation.Vertical
@@ -76,7 +91,7 @@ namespace Acr.UserDialogs.Fragments
                 childLayout.AddView(this.CreateRow(action, false));
             sv.AddView(childLayout);
             sv.LayoutParameters = param;
-            
+
             layout.AddView(sv);
 
             if (config.Destructive != null)
