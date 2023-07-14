@@ -1,6 +1,8 @@
-using System;
+﻿using System;
 using Android.App;
+using Android.Util;
 using Android.Views;
+using Android.Widget;
 using AndroidHUD;
 
 
@@ -111,21 +113,18 @@ namespace Acr.UserDialogs
                 txt += p + "%\n";
             }
 
-            if (this.config.OnCancel != null)
-                txt += "\n" + this.config.CancelText;
-
-                AndHUD.Shared.Show(
-                    this.activity,
-                    txt,
-                    p,
-                    this.config.MaskType.ToNative(),
-                    null,
-                    this.OnCancelClick,
-                    true,
-                    null,
-                    this.BeforeShow,
-                    this.AfterShow
-                );
+            AndHUD.Shared.Show(
+                this.activity,
+                txt,
+                p,
+                this.config.MaskType.ToNative(),
+                null,
+                this.OnCancelClick,
+                true,
+                null,
+                this.BeforeShow,
+                this.AfterShow
+            );
         }
 
         private void BeforeShow(Dialog dialog)
@@ -133,6 +132,23 @@ namespace Acr.UserDialogs
             if (dialog == null)
                 return;
             dialog.Window.AddFlags(WindowManagerFlags.NotFocusable);
+            var textViewId = dialog.FindViewById(AndroidHUD.Resource.Id.textViewStatus);
+            var layout = (RelativeLayout)textViewId.Parent;
+            layout.SetMinimumWidth((int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 150, dialog.Context.Resources.DisplayMetrics));
+
+            var _params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
+            _params.AddRule(LayoutRules.Below, AndroidHUD.Resource.Id.textViewStatus);
+            _params.AddRule(LayoutRules.CenterHorizontal);
+
+            Button button;
+            if (config.CancelButtonAndroidStyleId is int styleId)
+                button = new Button(new ContextThemeWrapper(dialog.Context, styleId));
+            else
+                button = new Button(dialog.Context);
+
+            button.Text = config.CancelText;
+            button.Click += (s, e) => OnCancelClick();
+            layout.AddView(button, _params);
         }
 
         private void AfterShow(Dialog dialog)
