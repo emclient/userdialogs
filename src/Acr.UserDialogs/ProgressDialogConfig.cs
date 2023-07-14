@@ -9,6 +9,7 @@ namespace Acr.UserDialogs
         public static string DefaultTitle { get; set; } = "Loading";
         public static MaskType DefaultMaskType { get; set; } = MaskType.Black;
         public static bool UseAndroidImmersiveMode { get; set; }
+        public static int? DefaultCancelButtonAndroidStyleId { get; set; }
 
 
         public string CancelText { get; set; }
@@ -17,6 +18,7 @@ namespace Acr.UserDialogs
         public bool IsDeterministic { get; set; }
         public MaskType MaskType { get; set; }
         public Action OnCancel { get; set; }
+        public int? CancelButtonAndroidStyleId { get; set; }
 
 
         public ProgressDialogConfig()
@@ -25,6 +27,7 @@ namespace Acr.UserDialogs
             this.CancelText = DefaultCancelText;
             this.MaskType = DefaultMaskType;
             this.AutoShow = true;
+            this.CancelButtonAndroidStyleId = DefaultCancelButtonAndroidStyleId;
         }
 
 
