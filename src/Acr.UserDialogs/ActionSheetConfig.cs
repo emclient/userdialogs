@@ -82,9 +82,9 @@ namespace Acr.UserDialogs
         }
 
 
-        public ActionSheetConfig Add(string text, Action action = null, string icon = null, uint? iconTint = null)
+        public ActionSheetConfig Add(string text, Action action = null, string icon = null, uint? iconTint = null, object? tag = null)
         {
-            this.Options.Add(new ActionSheetOption(text, action, icon, iconTint));
+            this.Options.Add(new ActionSheetOption(text, action, icon, iconTint, tag));
             return this;
         }
     }

@@ -123,9 +123,9 @@ namespace Acr.UserDialogs.Fragments
             row.SetBackgroundResource(Extensions.GetSelectableItemBackground(this.Activity));
 
             if (action.ItemIcon != null)
-                row.AddView(this.GetIcon(action.ItemIcon, action.IconTint));
+                row.AddView(this.GetIcon(action.ItemIcon, action.IconTint, action.Tag));
 
-            row.AddView(this.GetText(action.Text, isDestructive));
+            row.AddView(this.GetText(action.Text, isDestructive, action.Tag));
             row.Click += (sender, args) =>
             {
                 action.Action?.Invoke();
@@ -134,7 +134,7 @@ namespace Acr.UserDialogs.Fragments
             return row;
         }
 
-        private Color GetColorFromUint(uint color)
+        protected Color GetColorFromUint(uint color)
         {
             int a = (int)((color >> 24) & 0xff);
             int r = (int)((color >> 16) & 0xff);
@@ -209,7 +209,7 @@ namespace Acr.UserDialogs.Fragments
         }
 
 
-        protected virtual TextView GetText(string text, bool isDestructive)
+        protected virtual View GetText(string text, bool isDestructive, object? tag = null)
         {
             var layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent)
             {
@@ -234,7 +234,7 @@ namespace Acr.UserDialogs.Fragments
         }
 
 
-        protected virtual ImageView GetIcon(string icon, uint? iconTint = null)
+        protected virtual View GetIcon(string icon, uint? iconTint = null, object? tag = null)
         {
             var layout = new LinearLayout.LayoutParams(this.DpToPixels(24), this.DpToPixels(24))
             {
@@ -254,7 +254,8 @@ namespace Acr.UserDialogs.Fragments
                 var drawable = ImageLoader.Load(icon);
                 if (drawable is object)
                     img.SetImageDrawable(drawable);
-                else {
+                else
+                {
                     var uri = Android.Net.Uri.Parse(icon);
                     if (uri is object)
                         img.SetImageURI(uri);
