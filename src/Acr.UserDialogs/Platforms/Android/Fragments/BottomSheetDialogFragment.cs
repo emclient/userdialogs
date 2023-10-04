@@ -108,6 +108,11 @@ namespace Acr.UserDialogs.Fragments
             }
             dlg.SetContentView(layout);
             dlg.SetCancelable(false);
+
+#if !MONOANDROID9_0
+            dlg.Behavior.State = BottomSheetBehavior.StateExpanded;
+#endif
+
             return dlg;
         }
 
