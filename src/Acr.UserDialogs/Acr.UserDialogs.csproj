@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid13.0;net7.0-ios;net7.0-android</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;net7.0-ios;net7.0-android</TargetFrameworks>
         <PackageProjectUrl>https://github.com/aritchie/userdialogs</PackageProjectUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <Authors>Allan Ritchie</Authors>
