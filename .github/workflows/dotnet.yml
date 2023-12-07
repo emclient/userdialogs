@@ -23,7 +23,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         distribution: 'microsoft'
-        java-version: '21'
+        java-version: '17'
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build number
