@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid90;monoandroid10.0;net7.0-ios;net7.0-android</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid13.0;net7.0-ios;net7.0-android</TargetFrameworks>
         <PackageProjectUrl>https://github.com/aritchie/userdialogs</PackageProjectUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <Authors>Allan Ritchie</Authors>
@@ -39,7 +39,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" $(TargetFramework.StartsWith('monoandroid10')) or $(TargetFramework.StartsWith('net7.0-android')) ">
+    <PropertyGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) or $(TargetFramework.StartsWith('net7.0-android')) ">
         <DefineConstants>$(DefineConstants);ANDROIDX</DefineConstants>
     </PropertyGroup>
 
@@ -57,15 +57,7 @@
         <Compile Include="Platforms\Shared\**\*.cs" />
     </ItemGroup>
 
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid9')) ">
-        <Compile Include="Platforms\Shared\**\*.cs" />
-        <Compile Include="Platforms\Android\**\*.cs" />
-        <Reference Include="System.Drawing.Common" />
-        <PackageReference Include="AndHUD" Version="1.4.3" />
-        <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
-    </ItemGroup>
-
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid10')) or $(TargetFramework.StartsWith('net7.0-android')) ">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) or $(TargetFramework.StartsWith('net7.0-android')) ">
         <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\Android\**\*.cs" />
         <Reference Include="System.Drawing.Common" />
