@@ -119,7 +119,7 @@ namespace Acr.UserDialogs
                 p,
                 this.config.MaskType.ToNative(),
                 null,
-                this.OnCancelClick,
+                this.config.OnCancel is not null ? this.OnCancelClick : null,
                 true,
                 null,
                 this.BeforeShow,
@@ -136,19 +136,22 @@ namespace Acr.UserDialogs
             var layout = (RelativeLayout)textViewId.Parent;
             layout.SetMinimumWidth((int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 150, dialog.Context.Resources.DisplayMetrics));
 
-            var _params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-            _params.AddRule(LayoutRules.Below, AndroidHUD.Resource.Id.textViewStatus);
-            _params.AddRule(LayoutRules.CenterHorizontal);
+            if (config.OnCancel is not null)
+            {
+                var _params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
+                _params.AddRule(LayoutRules.Below, AndroidHUD.Resource.Id.textViewStatus);
+                _params.AddRule(LayoutRules.CenterHorizontal);
 
-            Button button;
-            if (config.CancelButtonAndroidStyleId is int styleId)
-                button = new Button(new ContextThemeWrapper(dialog.Context, styleId));
-            else
-                button = new Button(dialog.Context);
+                Button button;
+                if (config.CancelButtonAndroidStyleId is int styleId)
+                    button = new Button(new ContextThemeWrapper(dialog.Context, styleId));
+                else
+                    button = new Button(dialog.Context);
 
-            button.Text = config.CancelText;
-            button.Click += (s, e) => OnCancelClick();
-            layout.AddView(button, _params);
+                button.Text = config.CancelText;
+                button.Click += (s, e) => OnCancelClick();
+                layout.AddView(button, _params);
+            }
         }
 
         private void AfterShow(Dialog dialog)
