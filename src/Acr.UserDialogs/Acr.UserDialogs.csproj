@@ -61,8 +61,8 @@
         <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\Android\**\*.cs" />
         <Reference Include="System.Drawing.Common" />
-        <PackageReference Include="AndHUD" Version="2.0.0" />
-        <PackageReference Include="Xamarin.Google.Android.Material" Version="1.4.0.4" />
+        <PackageReference Include="AndHUD" Version="2.0.1" />
+        <PackageReference Include="Xamarin.Google.Android.Material" Version="1.10.0.3" />
     </ItemGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('xamarin.ios')) ">
@@ -76,7 +76,7 @@
         <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\ios\**\*.cs" />
         <Compile Include="Platforms\Apple\**\*.cs" />
-        <PackageReference Include="BTProgressHUD" Version="2.0.0" />
+        <PackageReference Include="BTProgressHUD" Version="2.0.1" />
     </ItemGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('xamarin.tvos')) ">

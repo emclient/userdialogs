@@ -28,6 +28,8 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build number
       run: echo "Build $env:GITHUB_RUN_NUMBER"
+    - name: Add NuGet feed
+      run: dotnet nuget add source --username filipnavara --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/filipnavara/index.json"
     - name: Build
       run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:BUILD_BUILDNUMBER=$env:GITHUB_RUN_NUMBER /restore
     - name: Pack
