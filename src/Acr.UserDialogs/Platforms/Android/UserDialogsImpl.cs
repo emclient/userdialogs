@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Acr.UserDialogs.Builders;
 using Acr.UserDialogs.Fragments;
 using Acr.UserDialogs.Infrastructure;
@@ -232,7 +232,7 @@ namespace Acr.UserDialogs
             {
                 try
                 {
-                    AndHUD.Shared.Dismiss(activity);
+                    AndHUD.Shared.Dismiss();
                 }
                 catch
                 {
