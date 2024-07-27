@@ -5,7 +5,7 @@ namespace Acr.UserDialogs
 {
     public static partial class UserDialogs
     {
-        #if NETSTANDARD
+        #if !ANDROID && !IOS && !MACCATALYST
         static IUserDialogs currentInstance;
         public static IUserDialogs Instance
         {
