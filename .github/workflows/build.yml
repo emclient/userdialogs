@@ -1,46 +1,59 @@
-name: Build
+name: Build and publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
   push:
-    branches:
-    - master
-    - dev
-    - preview
-    - v*
-    paths:
-    - "src/**"
-    - ".github/workflows/**"
-
-env:
-  NugetApiKey: ${{secrets.NUGETAPIKEY}}
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
       with:
-          fetch-depth: 0
-
-    - name: Setup .NET Core
+        fetch-depth: 0
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-          dotnet-version: '8.0.201'
-
-    - name: Add .NET Workloads
-      run: dotnet workload install maui
-
+        dotnet-version: 8.0.x
+    - name: Install workloads
+      run: dotnet workload install -s https://api.nuget.org/v3/index.json android ios maccatalyst
+    - name: Setup Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'microsoft'
+        java-version: '17'
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
     - name: Build
-      run: dotnet build Build.slnf /restore -m -property:Configuration=Release -property:PublicRelease=true
+      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:PublicRelease=true /restore
+    - name: Pack
+      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:PublicRelease=true /t:Pack
+    - uses: actions/upload-artifact@master
+      with:
+        name: build-artifacts
+        path: src/Acr.UserDialogs/bin
 
-    - name: Publish to Nuget
-      if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/v') }}
-      run: dotnet nuget push **/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ env.NugetApiKey }}
+  publish:
+    permissions:
+      packages: write
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.0.x
+        include-prerelease: true
+    - uses: actions/download-artifact@master
+      with:
+        name: build-artifacts
+        path: src/Acr.UserDialogs/bin
+    - name: Publish
+      if: ${{ github.event_name == 'push' }}
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        dotnet nuget add source https://nuget.pkg.github.com/emclient/index.json -n github
+        find src/Acr.UserDialogs/bin/Release -name '*.nupkg' | xargs -i dotnet nuget push {} -s github --api-key ${{ secrets.GITHUB_TOKEN }}
