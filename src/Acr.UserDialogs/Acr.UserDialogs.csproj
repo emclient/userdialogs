@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net8.0;net8.0-ios;net8.0-android;net8.0-maccatalyst</TargetFrameworks>
+        <AssemblyName>MailClient.Acr.UserDialogs</AssemblyName>
         <PackageId>MailClient.Acr.UserDialogs</PackageId>
         <PackageProjectUrl>https://github.com/emclient/userdialogs</PackageProjectUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
