@@ -8,7 +8,7 @@ namespace Sample
         {
             InitializeComponent();
 
-            this.MainPage = new MainPage();
+            this.MainPage = new StandardPage();
         }
     }
 }
