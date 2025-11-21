@@ -9,6 +9,7 @@ namespace Acr.UserDialogs.Infrastructure
     {
         public static UIWindow GetTopWindow(this UIApplication app) => app
             .Windows
+            .AsEnumerable()
             .Reverse()
             .FirstOrDefault(x =>
                 x.WindowLevel == UIWindowLevel.Normal &&
