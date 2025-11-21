@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 9.0.x
     - name: Install workloads
-      run: dotnet workload install -s https://api.nuget.org/v3/index.json android ios maccatalyst
+      run: dotnet workload restore --project src/Acr.UserDialogs/Acr.UserDialogs.csproj
     - name: Setup Java
       uses: actions/setup-java@v2
       with:
@@ -27,7 +27,7 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
     - name: Build
-      run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:PublicRelease=true /restore
+      run: dotnet build src/Acr.UserDialogs/Acr.UserDialogs.csproj -p:Configuration=Release -p:PublicRelease=true
     - name: Pack
       run: msbuild src/Acr.UserDialogs /p:Configuration=Release /p:PublicRelease=true /t:Pack
     - uses: actions/upload-artifact@master
