@@ -10,8 +10,8 @@ namespace Acr.UserDialogs
 {
     public class ProgressDialog : IProgressDialog
     {
-        readonly Activity activity;
-        readonly ProgressDialogConfig config;
+        protected readonly Activity activity;
+        protected readonly ProgressDialogConfig config;
 
 
         public ProgressDialog(ProgressDialogConfig config, Activity activity)
@@ -22,7 +22,7 @@ namespace Acr.UserDialogs
 
         #region IProgressDialog Members
 
-        string title;
+        protected string title;
         public virtual string Title
         {
             get { return this.title; }
@@ -37,7 +37,7 @@ namespace Acr.UserDialogs
         }
 
 
-        int percentComplete;
+        protected int percentComplete;
         public virtual int PercentComplete
         {
             get { return this.percentComplete; }
@@ -58,7 +58,7 @@ namespace Acr.UserDialogs
         }
 
 
-        public virtual bool IsShowing { get; private set; }
+        public virtual bool IsShowing { get; protected set; }
 
 
         public virtual void Show()
@@ -127,7 +127,7 @@ namespace Acr.UserDialogs
             );
         }
 
-        private void BeforeShow(Dialog dialog)
+        protected virtual void BeforeShow(Dialog dialog)
         {
             if (dialog == null)
                 return;
@@ -154,7 +154,7 @@ namespace Acr.UserDialogs
             }
         }
 
-        private void AfterShow(Dialog dialog)
+        protected virtual void AfterShow(Dialog dialog)
         {
             if (dialog == null)
                 return;
@@ -174,7 +174,7 @@ namespace Acr.UserDialogs
             dialog.Window.ClearFlags(WindowManagerFlags.NotFocusable);
         }
 
-        void OnCancelClick()
+        protected virtual void OnCancelClick()
         {
             if (this.config.OnCancel == null)
                 return;
