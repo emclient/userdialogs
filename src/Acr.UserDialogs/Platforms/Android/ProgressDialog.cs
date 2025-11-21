@@ -136,22 +136,24 @@ namespace Acr.UserDialogs
             var layout = (RelativeLayout)textViewId.Parent;
             layout.SetMinimumWidth((int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 150, dialog.Context.Resources.DisplayMetrics));
 
-            if (config.OnCancel is not null)
+            var _params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
+            _params.AddRule(LayoutRules.Below, AndroidHUD.Resource.Id.textViewStatus);
+            _params.AddRule(LayoutRules.CenterHorizontal);
+
+            Button button;
+            if (config.CancelButtonAndroidStyleId is int styleId)
+                button = new Button(new ContextThemeWrapper(dialog.Context, styleId));
+            else
+                button = new Button(dialog.Context);
+
+            button.Id = AndroidHUD.Resource.Id.cancel_button;
+            button.Text = config.CancelText;
+            button.Click += (s, e) => OnCancelClick();
+            if (config.OnCancel is null)
             {
-                var _params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-                _params.AddRule(LayoutRules.Below, AndroidHUD.Resource.Id.textViewStatus);
-                _params.AddRule(LayoutRules.CenterHorizontal);
-
-                Button button;
-                if (config.CancelButtonAndroidStyleId is int styleId)
-                    button = new Button(new ContextThemeWrapper(dialog.Context, styleId));
-                else
-                    button = new Button(dialog.Context);
-
-                button.Text = config.CancelText;
-                button.Click += (s, e) => OnCancelClick();
-                layout.AddView(button, _params);
+                button.Visibility = ViewStates.Gone;
             }
+            layout.AddView(button, _params);
         }
 
         protected virtual void AfterShow(Dialog dialog)
