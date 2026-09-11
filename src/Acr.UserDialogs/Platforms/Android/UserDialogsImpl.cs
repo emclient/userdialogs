@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Acr.UserDialogs.Builders;
 using Acr.UserDialogs.Fragments;
 using Acr.UserDialogs.Infrastructure;
@@ -287,7 +288,7 @@ namespace Acr.UserDialogs
             );
         }
 
-        protected virtual IDisposable ShowDialog<TFragment, TConfig>(AppCompatActivity activity, TConfig config) where TFragment : AbstractAppCompatDialogFragment<TConfig> where TConfig : class, new()
+        protected virtual IDisposable ShowDialog<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TFragment, TConfig>(AppCompatActivity activity, TConfig config) where TFragment : AbstractAppCompatDialogFragment<TConfig> where TConfig : class, new()
         {
             TFragment frag = null;
             activity.SafeRunOnUi(() =>
